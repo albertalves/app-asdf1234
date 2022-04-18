@@ -67,7 +67,10 @@
       createProduct () {
         this.$store.dispatch('createProduct', this.form)
                   .then(() => this.$snotify.success('Produto adicionado com sucesso.', 'Pronto!'))
-                  .then(() => this.enable = false)
+                  .then(() => {
+                    this.enable = false;
+                    this.$emit('reload');
+                  })
                   .catch(error => {
                     this.errors = error.response.data.errors;
                     this.$snotify.error('Ocorreu um erro!', 'Ops...')

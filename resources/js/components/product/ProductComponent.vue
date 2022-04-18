@@ -2,7 +2,7 @@
     <v-container>
         <v-col cols="12">
             <v-card-title class="primary">
-                <span class="headline white--text">Propriedades</span>
+                <span class="headline white--text">Produtos</span>
             </v-card-title>
             <v-card class="pa-5">
                 <v-row>
@@ -83,10 +83,12 @@
 
         <update-product-modal
             ref="updateProductModal"
+            @reload="getProducts"
         ></update-product-modal>
 
         <create-product-modal
             ref="createProductModal"
+            @reload="getProducts"
         ></create-product-modal>
 
         <product-history-modal
