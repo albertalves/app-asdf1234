@@ -16,7 +16,8 @@ class HistoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id' => ['exists:products,id', 'required'],
+            'product_id' => ['required'],
+            'sku' => ['exists:products,uuid', 'required'],
             'quantity' => ['required'],
             'action_type' => ['required', Rule::in([ActionType::INITIAL, ActionType::ADDED, ActionType::REMOVED])],
         ];
@@ -25,7 +26,7 @@ class HistoryRequest extends FormRequest
     public function attributes()
     {
         return [
-            'product_id' => 'Produto',
+            'sku' => 'Produto',
             'quantity' => 'Quantidade',
             'action_type' => 'Tipo da ação',
         ];
@@ -36,7 +37,7 @@ class HistoryRequest extends FormRequest
         $msg = 'O campo :attribute é obrigatório.';
 
         return [
-            'product_id.exists' => 'Produto não encontrado.',
+            'sku.exists' => 'Produto não encontrado.',
             'quantity.unique' => $msg,
             'action_type.required' => $msg,
         ];

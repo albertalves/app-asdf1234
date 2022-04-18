@@ -37,7 +37,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'uuid.exists' => 'Produto não encontrado',
             'name.required' => $msg,
-            'quantity.unique' => $msg,
+            'quantity.required' => $msg,
         ];
     }
 }
