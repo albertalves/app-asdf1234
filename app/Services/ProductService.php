@@ -53,6 +53,10 @@ class ProductService
      */
     public function create(array $attributes)
     {
+        if ($attributes['quantity'] < 0) {
+            throw new \Exception('A quantidade não pode ser negativa.');
+        }
+
         return $this->productRepository->create($attributes);
     }
 
