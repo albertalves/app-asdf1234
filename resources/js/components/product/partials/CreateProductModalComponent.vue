@@ -72,8 +72,14 @@
                     this.$emit('reload');
                   })
                   .catch(error => {
-                    this.errors = error.response.data.errors;
-                    this.$snotify.error('Ocorreu um erro!', 'Ops...')
+                    let msg = 'Ocorreu um erro!';
+                    if (error.response.data.errors) {
+                      this.errors = error.response.data.errors;
+                    } else {
+                      msg = error.response.data.message;
+                    }
+
+                    this.$snotify.error(msg, 'Ops...')
                   })
         },
 
