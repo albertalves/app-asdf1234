@@ -19,3 +19,4 @@ Em outro terminal, executar os comandos abaixo:
 - cp .env.example .env
 - composer install
 - php artisan key:generate
+- php artisan db:seed
