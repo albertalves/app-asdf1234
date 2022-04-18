@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\ActionType;
 use App\Jobs\HistoryJob;
 use App\Repositories\ProductRepository;
 
@@ -30,9 +31,19 @@ class ProductService
      * 
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function find(string $uuid)
+    public function findByUuid(string $uuid)
     {
-        return $this->productRepository->find($uuid);
+        return $this->productRepository->findByUuid($uuid);
+    }
+
+    /**
+     * @param  int $id
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findById(int $id)
+    {
+        return $this->productRepository->findById($id);
     }
 
     /**
@@ -53,10 +64,33 @@ class ProductService
      */
     public function update(array $attributes, string $uuid)
     {
-        if (! $this->find($uuid)) {
+        if (! $this->findByUuid($uuid)) {
             throw new \Exception('Produto não encontrado.');
         }
 
         return $this->productRepository->update($attributes, $uuid);
+    }
+
+    /**
+     * @param  array $attributes
+     * 
+     * @return void
+     */
+    public function updateQuantity(array $attributes): void
+    {
+        $newProduct = [];
+        $product = $this->findById($attributes['product_id']);
+
+        if (!$product) {
+            throw new \Exception('Produto não encontrado.');
+        }
+
+        if ($attributes['action_type'] == ActionType::ADDED) {
+            $newProduct['quantity'] = $product['quantity'] + $attributes['quantity'];
+        } else {
+            $newProduct['quantity'] = $product['quantity'] - $attributes['quantity'];
+        }
+
+        $this->update($newProduct, $product['uuid']);
     }
 }

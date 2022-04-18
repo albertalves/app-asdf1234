@@ -15,14 +15,19 @@ class ProductRepository
 
     public function getAll()
     {
-        return $this->entity->all();
+        return $this->entity->with('history')->orderBy('id', 'desc')->paginate(10);
     }
 
-    public function find(string $uuid)
+    public function findByUuid(string $uuid)
     {
         return $this->entity
                     ->where('uuid', '=', $uuid)
                     ->firstOrFail();
+    }
+
+    public function findById(int $id)
+    {
+        return $this->entity->find($id);
     }
 
     public function create(array $attributes)
@@ -32,6 +37,6 @@ class ProductRepository
 
     public function update(array $attributes, string $uuid)
     {
-        return $this->find($uuid)->update($attributes);
+        return $this->findByUuid($uuid)->update($attributes);
     }
 }

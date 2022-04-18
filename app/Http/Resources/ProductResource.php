@@ -13,9 +13,11 @@ class ProductResource extends BaseResource
     public function toArray($request)
     {
         return [
+            'id' => $this->whenPresent('id'),
             'sku' => $this->whenPresent('uuid'),
             'name' => $this->whenPresent('name'),
             'quantity' => $this->whenPresent('quantity'),
+            'history' => $this->whenPresent('history'),
         ];
     }
 }

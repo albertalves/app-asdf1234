@@ -12,8 +12,14 @@ class Product extends Model
     use Uuid;
     
     protected $fillable = [
+        'id',
         'uuid', 
         'name', 
         'quantity'
     ];
+
+    public function history()
+    {
+        return $this->hasMany(History::class);
+    }
 }
